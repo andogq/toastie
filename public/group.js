@@ -1,7 +1,7 @@
-function createGroupId() {
+function createGroup() {
     let loadId = startLoad();
-    return new Promise((resolve, reject) => {
-        setTimeout(resolve, 2000, "yeet-1234");
+    return request("/group/new").then((res) => {
+        return res.groupId;
     }).then(joinGroup).finally(() => stopLoad(loadId));
 }
 

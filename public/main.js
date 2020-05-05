@@ -34,6 +34,10 @@ const dom = {
 
 function init() {
     addEventListeners();
+
+    getLocation().then((location) => {
+        request("/nearby", location).then(console.log);
+    });
 }
 
 function addEventListeners() {
@@ -60,8 +64,8 @@ function addEventListeners() {
         // Request location, then a new group id and show it to the user
         getLocation().then((location) => {
             g.location = location;
-            
-            createGroupId().then((groupId) => {
+
+            createGroup().then((groupId) => {
                 notify(`Your group id: ${groupId} (it's been copied)`);
                 showPage(dom.pages.swipe);
             }).catch((e) => {
