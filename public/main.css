@@ -41,6 +41,21 @@ img {
     max-width: 100%;
 }
 
+input {
+    border: none;
+    background: none;
+
+    user-select: all;
+}
+
+input:focus {
+    outline: none;
+}
+
+input::placeholder {
+    color: black;
+}
+
 .page {
     position: fixed;
     top: 0;
@@ -75,7 +90,7 @@ img {
     text-align: center;
 }
 
-.button {
+.button, input {
     height: 2rem;
 
     margin: 1rem;
@@ -91,7 +106,7 @@ img {
     font-size: 1.5rem;
 }
 
-.button > h5 {
+.button > h5, input {
     font-size: 1rem;
     margin-left: 0.5rem;
 }
@@ -105,7 +120,14 @@ img {
     padding: 3rem 1rem;
 }
 
-#join.button {
+#groupIdInput, #groupIdInput.join + #join {
+    display: none;
+}
+#groupIdInput.join {
+    display: inline;
+}
+
+#join.button, #groupIdInput.join {
     background: var(--positive);
 }
 

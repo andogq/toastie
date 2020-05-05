@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    <div id="landing" class="page">
+    <div id="landing" class="page active">
         <div class="headerChunk">
             <h1>Toastie</h1>
         </div>
@@ -28,6 +28,7 @@
         <div class="bodyChunk">
             <h4>Food decisions made easy</h4>
             <p>To begin, join a group with a code or create a new group!</p>
+            <input id="groupIdInput" type="text" placeholder="Group Id"/>
             <div class="button" id="join">
                 <span class="material-icons">person_add</span>
                 <h5>Join a group</h5>
@@ -39,7 +40,7 @@
         </div>
     </div>
 
-    <div id="swipe" class="page active">
+    <div id="swipe" class="page">
         <div class="headerChunk">
             <h3>Toastie</h3>
         </div>
@@ -67,8 +68,8 @@
             <div class="matchText">
                 <h3>It's a match!</h3>
             </div>
-            <div class="roomId">
-                <p>Room id: <span id="roomId">abcd-1234</span></p>
+            <div class="groupId">
+                <p>Group id: <span id="groupId">abcd-1234</span></p>
             </div>
         </div>
     </div>
@@ -77,6 +78,7 @@
         <p>Made by <a href="https://ando.gq">ando.gq</a></p>
     </div>
 
+    <script src="group.js"></script>
     <script src="main.js"></script>
 </body>
 
