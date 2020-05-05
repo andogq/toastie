@@ -57,12 +57,19 @@ function addEventListeners() {
     });
 
     dom.buttons.create.addEventListener("click", () => {
-        // Request a new group id and show it to the user
-        createGroupId().then((groupId) => {
-            notify(`Your group id: ${groupId} (it's been copied)`);
-            showPage(dom.pages.swipe);
+        // Request location, then a new group id and show it to the user
+        getLocation().then((location) => {
+            g.location = location;
+            
+            createGroupId().then((groupId) => {
+                notify(`Your group id: ${groupId} (it's been copied)`);
+                showPage(dom.pages.swipe);
+            }).catch((e) => {
+                notify("Something went wrong when making a group id :(");
+                console.error(e);
+            });
         }).catch((e) => {
-            notify("Something went wrong when making a group id :(");
+            notify(e);
             console.error(e);
         });
     });
