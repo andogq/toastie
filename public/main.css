@@ -3,6 +3,7 @@
     padding: 0;
 
     user-select: none;
+    transition: opacity var(--time);
 }
 
 html, body {
@@ -113,6 +114,11 @@ input::placeholder {
     margin-left: 0.5rem;
 }
 
+.button.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 #landing > .bodyChunk {
     display: flex;
     align-items: center;
@@ -208,8 +214,6 @@ input::placeholder {
 
     opacity: 0;
     pointer-events: none;
-
-    transition: opacity var(--time);
 }
 #notification.active {
     opacity: 1;
@@ -218,6 +222,31 @@ input::placeholder {
 
 #notification > #notificationText {
     padding: 0 0.5rem;
+}
+
+#loader {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+
+    color: white;
+
+    opacity: 0;
+    pointer-events: none;
+}
+
+#loader.active {
+    animation: rotate calc(var(--time) * 2) infinite;
+    opacity: 1;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 #footer {
