@@ -1,6 +1,7 @@
 // Constants
 const c = {
-    notificationTimeout: 5000
+    notificationTimeout: 5000,
+    swipeMin: 30
 }
 
 // Globals
@@ -35,6 +36,10 @@ const dom = {
         location: d("restaurantLocation"),
         rating: d("restaurantRating"),
         image: d("restaurantImage")
+    },
+    covers: {
+        left: d("swipeLeft"),
+        right: d("swipeRight")
     }
 }
 
@@ -44,7 +49,7 @@ function init() {
     getLocation().then((location) => {
         request("/nearby", location).then((results) => {
             g.restaurants = results;
-            showRestaurant(1);
+            showRestaurant(0);
             showPage(dom.pages.swipe);
         });
     });
@@ -86,6 +91,27 @@ function addEventListeners() {
             notify(e);
             console.error(e);
         });
+    });
+
+    dom.buttons.yes.addEventListener("click", () => swipeRight());
+    dom.buttons.no.addEventListener("click", () => swipeLeft());
+
+    dom.pages.swipe.addEventListener("touchstart", (e) => {
+        g.swiping = true;
+        g.startTouch = e.changedTouches[0].clientX;
+    });
+    dom.pages.swipe.addEventListener("touchmove", (e) => {
+        let diff = e.changedTouches[0].clientX - g.startTouch;
+        if (diff < -c.swipeMin && g.swiping) {
+            swipeLeft();
+            g.swiping = false;
+        } else if (diff > c.swipeMin && g.swiping) {
+            swipeRight();
+            g.swiping = false;
+        }
+    });
+    dom.pages.swipe.addEventListener("touchend", () => {
+        g.swiping = false;
     });
 }
 

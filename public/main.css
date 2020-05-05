@@ -194,6 +194,47 @@ input::placeholder {
     display: inline;
 }
 
+.swipeCover {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: all var(--time);
+}
+.swipeCover > span {
+    color: white;
+}
+
+.swipeCover#swipeRight {
+    background: var(--positive);
+    left: 0;
+    right: 100%;
+}
+
+.swipeCover#swipeLeft {
+    background: var(--negative);
+    left: 100%;
+    right: 0;
+}
+
+.swipeCover.max {
+    opacity: 1;
+    pointer-events: all;
+
+    left: 0 !important;
+    right: 0 !important;
+}
+.swipeCover.max > span {
+    font-size: 5rem;
+}
+
 #no {
     background: var(--negative);
 }
