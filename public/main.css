@@ -15,7 +15,6 @@ html, body {
     font-family: "Baloo 2";
 
     --dark: #363457;
-    --accent: #AABD8C;
     --positive: #4E789B;
     --negative: #F39B6D;
 }
@@ -123,6 +122,9 @@ img {
     display: grid;
     grid: 80% auto auto / 1fr;
 
+    justify-items: center;
+    align-items: center;
+
     padding: 1rem;
 }
 
@@ -145,6 +147,17 @@ img {
 #swipe > .bodyChunk > .buttons {
     display: grid;
     grid: 1fr / 1fr 1fr;
+}
+
+#swipe > .bodyChunk > .matchText, #swipe.match > .bodyChunk > .buttons {
+    display: none;
+}
+
+#swipe > .bodyChunk > .matchText {
+    color: var(--positive);
+}
+#swipe.match > .bodyChunk > .matchText {
+    display: inline;
 }
 
 #no {
