@@ -163,7 +163,7 @@ input::placeholder {
     width: 100%;
 
     display: grid;
-    grid: 80% 1fr / 1fr;
+    grid: 60% 1fr / 1fr;
 
     justify-items: center;
     align-items: center;
@@ -172,6 +172,10 @@ input::placeholder {
 .swipeable > .imageContainer {
     height: 100%;
     width: 100%;
+
+    display: flex;
+    justify-items: center;
+    align-items: center;
 }
 
 #swipe > .bodyChunk > .buttons {

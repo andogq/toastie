@@ -1,4 +1,3 @@
-
 function request(url, data) {
     return new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest();

@@ -29,14 +29,24 @@ const dom = {
         el: d("notification"),
         text: d("notificationText")
     },
-    loader: d("loader")
+    loader: d("loader"),
+    restaurant: {
+        name: d("restaurantName"),
+        location: d("restaurantLocation"),
+        rating: d("restaurantRating"),
+        image: d("restaurantImage")
+    }
 }
 
 function init() {
     addEventListeners();
 
     getLocation().then((location) => {
-        request("/nearby", location).then(console.log);
+        request("/nearby", location).then((results) => {
+            g.restaurants = results;
+            showRestaurant(1);
+            showPage(dom.pages.swipe);
+        });
     });
 }
 

@@ -14,6 +14,10 @@
       {
         "source": "/nearby",
         "function": "nearby"
+      },
+      {
+        "source": "/photo",
+        "function": "photo"
       }
     ]
   },
