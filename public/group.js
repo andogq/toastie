@@ -5,12 +5,18 @@ function createGroup() {
     }).then(joinGroup).finally(() => stopLoad(loadId));
 }
 
-function joinGroup(id) {
+function joinGroup(groupId) {
     let loadId = startLoad();
     return new Promise((resolve, reject) => {
-        g.groupId = id;
-        dom.groupId.innerText = id;
-
-        setTimeout(resolve, 2000, id);
+        db.collection("groups").doc(groupId).get().then((doc) => {
+            if (doc.exists) {
+                g.group = {
+                    id: groupId,
+                    doc
+                };
+                dom.groupId.innerText = groupId;
+                resolve(groupId);
+            } else reject("Invalid group id");
+        });
     }).finally(() => stopLoad(loadId));
 }

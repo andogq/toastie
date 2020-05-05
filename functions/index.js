@@ -6,9 +6,37 @@ admin.initializeApp();
 let db = admin.firestore();
 
 exports.newGroup = functions.https.onRequest((request, response) => {
-    db.collection("test").doc("yeet").set({working: true});
+    function generateGroupId() {
+        function r(n) {
+            return Math.floor(Math.random() * n);
+        }
 
-    response.end(JSON.stringify({groupId: "yeet-1234"}));
+        let allowedCharacters = "abcdefghijklmnopqrstuvqxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        let groupId = "";
+        while (groupId.length < 10) {
+            groupId += allowedCharacters.charAt(r(allowedCharacters.length));
+        }
+
+        return db.collection("groups").doc(groupId).get().then((doc) => {
+            if (doc.exists) return generateGroupId();
+            else return groupId;
+        });
+    }
+
+    new Promise((resolve, reject) => {
+        generateGroupId().then((groupId) => {
+            return db.collection("groups").doc(groupId).create({yes: []}).then(() => {
+                resolve({groupId});
+            });
+        }).catch(reject);
+    }).then((body) => {
+        response.statusCode = 200;
+        response.send(JSON.stringify(body));
+        response.end();
+    }).catch(() => {
+        response.statusCode = 404;
+        response.end();
+    });
 });
 
 exports.photo = functions.https.onRequest((request, response) => {
@@ -22,7 +50,7 @@ exports.photo = functions.https.onRequest((request, response) => {
         response.statusCode = 404;
         response.end();
     }
-})
+});
 
 exports.nearby = functions.https.onRequest((request, response) => {
     function nearby(lat, lon) {

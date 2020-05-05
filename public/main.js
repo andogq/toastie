@@ -6,6 +6,7 @@ const c = {
 
 // Globals
 let g = {};
+let db;
 
 // Dom elements
 function d(id) {
@@ -46,13 +47,7 @@ const dom = {
 function init() {
     addEventListeners();
 
-    getLocation().then((location) => {
-        request("/nearby", location).then((results) => {
-            g.restaurants = results;
-            showRestaurant(0);
-            showPage(dom.pages.swipe);
-        });
-    });
+    db = firebase.firestore();
 }
 
 function addEventListeners() {
