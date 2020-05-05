@@ -34,8 +34,6 @@ function docSnapshot(doc) {
         
         if (!g.currentRestaurant) showRestaurant(0);
         
-        if (data.match) {
-            console.log("Match!");
-        }
+        if (data.match) match(data.match);
     }
 }

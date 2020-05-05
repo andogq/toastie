@@ -55,10 +55,12 @@ function addEventListeners() {
         // Show the group id input
         dom.inputs.groupId.classList.add("join");
         dom.inputs.groupId.focus();
+        disableButtons();
     });
     dom.inputs.groupId.addEventListener("blur", () => {
         // Hide the group id input
         dom.inputs.groupId.classList.remove("join");
+        enableButtons();
     }); 
     dom.inputs.groupId.addEventListener("keypress", (e) => {
         // Validate the group id and switch the page

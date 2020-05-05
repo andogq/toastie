@@ -17,31 +17,53 @@ function showRestaurant(id) {
 }
 
 function nextRestaurant() {
-    return showRestaurant(g.currentRestaurant.id + 1);
+    let nextId = g.currentRestaurant.id + 1;
+    if (nextId < g.restaurants.length) return showRestaurant(nextId);
+    else {
+        notify("There are no more nearby options!");
+        disableButtons();
+        return Promise.reject();
+    }
 }
 
 function swipeLeft() {
-    let loadId = startLoad();
-    dom.covers.left.classList.add("max");
-    return nextRestaurant().then(() => {
-        dom.covers.left.classList.remove("max")
-    }).finally(() => stopLoad(loadId));
+    if (!g.match) {
+        let loadId = startLoad();
+        dom.covers.left.classList.add("max");
+        return nextRestaurant().finally(() => {
+            dom.covers.left.classList.remove("max");
+            stopLoad(loadId);
+        });
+    }
 }
 
 function swipeRight() {
-    let loadId = startLoad();
-    dom.covers.right.classList.add("max");
+    if (!g.match) {
+        let loadId = startLoad();
+        dom.covers.right.classList.add("max");
 
-    let newDoc;
+        let newDoc;
 
-    if (g.yes.indexOf(g.currentRestaurant.placeId) != -1) newDoc = {
-        match: g.currentRestaurant.placeId
-    };
-    else newDoc = {
-        yes: [...g.yes, g.currentRestaurant.placeId]
-    };
+        if (g.yes.indexOf(g.currentRestaurant.placeId) != -1) newDoc = {
+            match: g.currentRestaurant.placeId
+        };
+        else newDoc = {
+            yes: [...g.yes, g.currentRestaurant.placeId]
+        };
 
-    return g.group.doc.update(newDoc).then(nextRestaurant).then(() => {
-        dom.covers.right.classList.remove("max")
-    }).finally(() => stopLoad(loadId));
+        return g.group.doc.update(newDoc).then(nextRestaurant).finally(() => {
+            dom.covers.right.classList.remove("max");
+            stopLoad(loadId);
+        });
+    }
+}
+
+function match(placeId) {
+    g.restaurants.forEach((r, i) => {
+        if (r.place_id == placeId) {
+            showRestaurant(i);
+        }
+    });
+    dom.pages.swipe.classList.add("match");
+    g.match = placeId;
 }

@@ -94,10 +94,13 @@ exports.newGroup = functions.https.onRequest((request, response) => {
 
 exports.photo = functions.https.onRequest((request, response) => {
     if (request.method == "GET" && request.query.photoReference) {
-        https.get(`https://maps.googleapis.com/maps/api/place/photo?photoreference=${request.query.photoReference}&maxwidth=1000&key=${functions.config().places.key}`, (res) => {
+        https.get(`https://maps.googleapis.com/maps/api/place/photo?photoreference=${request.query.photoReference}&maxwidth=2000&key=${functions.config().places.key}`, (res) => {
             response.statusCode = res.statusCode;
             response.set(res.headers);
             res.pipe(response);
+            res.addListener("close", () => {
+                response.end();
+            });
         });
     } else {
         response.statusCode = 404;
