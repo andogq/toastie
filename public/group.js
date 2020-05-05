@@ -3,3 +3,9 @@ function validateGroupId(id) {
         resolve();
     });
 }
+
+function createGroupId() {
+    return new Promise((resolve, reject) => {
+        resolve("yeet-1234");
+    });
+}

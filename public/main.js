@@ -1,6 +1,10 @@
 // Constants
+const c = {
+    notificationTimeout: 5000
+}
 
 // Globals
+let g = {};
 
 // Dom elements
 function d(id) {
@@ -21,6 +25,10 @@ const dom = {
         groupId: d("groupIdInput")
     },
     groupId: d("groupId"),
+    notification: {
+        el: d("notification"),
+        text: d("notificationText")
+    }
 }
 
 function init() {
@@ -42,14 +50,44 @@ function addEventListeners() {
         if (e.key == "Enter") validateGroupId(dom.inputs.groupId.value).then(() => {
             showPage(dom.pages.swipe);
         }).catch((e) => {
+            notify("Invalid group id!");
+            console.error(e);
+        });
+    });
+
+    dom.buttons.create.addEventListener("click", () => {
+        // Request a new group id and show it to the user
+        createGroupId().then((groupId) => {
+            notify(`Your group id: ${groupId} (it's been copied)`);
+            showPage(dom.pages.swipe);
+        }).catch((e) => {
+            notify("Something went wrong when making a group id :(");
             console.error(e);
         });
     });
 }
 
 function showPage(page) {
+    // Blur the active element when switching pages
+    document.activeElement.blur();
+
+    // Switch the page
     document.getElementsByClassName("active")[0].classList.remove("active");
     page.classList.add("active");
+}
+
+function notify(message) {
+    dom.notification.text.innerText = message;
+    dom.notification.el.classList.add("active");
+    
+    let timeoutId = Date.now();
+
+    setTimeout((currentId) => {
+        if (g.lastNotification == currentId) {
+            dom.notification.el.classList.remove("active");
+        }
+    }, c.notificationTimeout, timeoutId);
+    g.lastNotification = timeoutId;
 }
 
 init();
