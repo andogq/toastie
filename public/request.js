@@ -1,4 +1,5 @@
 function request(url, data) {
+    let loadId = startLoad();
     return new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest();
 
@@ -14,5 +15,5 @@ function request(url, data) {
         
         if (data) data = JSON.stringify(data);
         xhr.send(data);
-    });
+    }).finally(() => stopLoad(loadId));
 }

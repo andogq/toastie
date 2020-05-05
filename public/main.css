@@ -174,7 +174,7 @@ input::placeholder {
     width: 100%;
 
     display: flex;
-    justify-items: center;
+    justify-content: center;
     align-items: center;
 }
 
