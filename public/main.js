@@ -99,10 +99,10 @@ function addEventListeners() {
     });
     dom.pages.swipe.addEventListener("touchmove", (e) => {
         let diff = e.changedTouches[0].clientX - g.startTouch;
-        if (diff < -c.swipeMin && g.swiping) {
+        if (diff < -c.swipeMin && g.swiping && !g.match) {
             swipeLeft();
             g.swiping = false;
-        } else if (diff > c.swipeMin && g.swiping) {
+        } else if (diff > c.swipeMin && g.swiping && !g.match) {
             swipeRight();
             g.swiping = false;
         }

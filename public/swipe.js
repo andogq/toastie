@@ -1,4 +1,5 @@
 function showRestaurant(id) {
+    if (g.match) return Promise.resolve();
     return new Promise((resolve) => {
         let r = g.restaurants[id];
 
@@ -44,10 +45,12 @@ function swipeRight() {
 
         let newDoc;
 
-        if (g.yes.indexOf(g.currentRestaurant.placeId) != -1) newDoc = {
-            match: g.currentRestaurant.placeId
-        };
-        else newDoc = {
+        if (g.yes.indexOf(g.currentRestaurant.placeId) != -1) {
+            newDoc = {
+                match: g.currentRestaurant.placeId
+            };
+            match(g.currentRestaurant.placeId);
+        } else newDoc = {
             yes: [...g.yes, g.currentRestaurant.placeId]
         };
 
